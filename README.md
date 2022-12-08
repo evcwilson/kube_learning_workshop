@@ -31,19 +31,8 @@
     nano ~/.config/fish/config.fish
     ```
 ## Setting up Variables
-
-### Setup Domain
-```bash
-export DOMAIN=example.com
-```
-
-### Setup Email
-```bash
-export EMAIL=name@example.com
-```
-
-To make these changes permanent in the terminal make the do the following. 
 > In Linux the tilda `~` references the home directory aka `/home/$USER`
+We will be setting up permanaent environment variables for the Domain, email of the user and the location of the KUBECONFIG for k3s. 
 
 #### bash
 ```bash 
@@ -53,14 +42,15 @@ nano ~/.profile
     export EMAIL=name@example.com
     export KUBECONFIG=/etc/rancher/k3s/k3s.yaml 
 ```
+To save the file press `Ctrl + x` to save, `Y` to confirm changes and then `Enter` to save changes to the file. 
+
+Then to make these variables live run the `.bashrc` with `. ~/.bashrc`
 
 #### fish 
 ```bash
-nano ~/.config/fish/config.fish
-#Add the following lines to the bottom of the file: 
-    set -gx DOMAIN example.com
-    set -gx EMAIL name@example.com\
-    set -gx KUBECONFIG /etc/rancher/k3s/k3s.yaml 
+set -Ux DOMAIN example.com
+set -Ux EMAIL name@example.com\
+set -Ux KUBECONFIG /etc/rancher/k3s/k3s.yaml 
 ```
 
 ### Install pieces needed for Longhorn and Wireguard
