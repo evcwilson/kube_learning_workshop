@@ -131,15 +131,19 @@ kubectl create namespace ingress-nginx
 ```
 
 ### Add nginx repository to helm
+Helm commands will have to be ran with the `sudo -E` prefix. 
+- `sudo, sudoedit` executes the command as another user, normally a superuser. 
+- `-E` perserves environment variables from your user to another when executing. 
+
 ```
-helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
-helm repo update
+sudo -E helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
+sudo -E helm repo update
 ```
 
 ### Install nginx ingress controller
 
 ```  
-helm install ingress-nginx ingress-nginx/ingress-nginx --version="4.0.17" \
+sudo -E helm install ingress-nginx ingress-nginx/ingress-nginx --version="4.0.17" \
 --set rbac.create=true \
 --set controller.kind=DaemonSet \
 --set controller.service.type=LoadBalancer \
