@@ -1,19 +1,37 @@
-apiVersion: networking.k8s.io/v1
-kind: Ingress
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
 metadata:
-  name: nginx-01
+  name: nginx-istio-gateway
   namespace: nginx-demo
-  annotations:
-    kubernetes.io/ingress.class: "nginx"
 spec:
-  rules:
-  - host: nginx-1.${DOMAIN}
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: nginx-1-service
-            port:
-              number: 80
+  selector:
+    istio: ingress-gateway
+  servers:
+  - port:
+      number: 80
+      name: http
+      protocol: HTTP
+    hosts:
+    - "*"
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: nginx-virtualservice
+  namespace: nginx-demo
+spec:
+  hosts:
+  - "*"
+  gateways:
+  - nginx-istio-gateway
+  http:
+  - name: "nginx"
+    match:
+    - uri:
+        prefix: "/"
+      ignoreUriCase: true
+    route:
+    - destination:
+        host: nginx-1
+        port:
+          number: 80

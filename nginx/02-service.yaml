@@ -1,7 +1,7 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: nginx-1-service
+  name: nginx-1
   namespace: nginx-demo
 spec:
   selector:
